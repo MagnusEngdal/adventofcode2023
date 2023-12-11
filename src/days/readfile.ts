@@ -15,7 +15,14 @@ export const read = (
           return;
         }
         const rows = data.split("\n");
-        resolve(rows);
+        resolve(
+          rows.reduce<string[]>((acc, curr) => {
+            if (curr.length > 0) {
+              acc.push(curr);
+            }
+            return acc;
+          }, [])
+        );
       }
     );
   });
