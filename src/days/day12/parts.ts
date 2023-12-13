@@ -15,7 +15,7 @@ export const part1 = (rows: ParseResult) => {
     });
   }
 
-  const f = fields[0];
+  const f = fields[2];
   console.log(recur(f.nr, f.row));
 
   return 0;
@@ -23,11 +23,9 @@ export const part1 = (rows: ParseResult) => {
 
 const recur = (sizes: number[], row: string): string[] | undefined => {
   const working: string[] = [];
+  const sz = [...sizes];
   console.log("---", sizes, row, sizes);
   for (let i = 0; i < sizes.length; i++) {
-    const sz = [...sizes];
-    sz.splice(i);
-
     const size = sizes[i];
     console.log("Testing: ", size, row, sizes, i);
     const options = findOptions(size, row);
@@ -40,6 +38,7 @@ const recur = (sizes: number[], row: string): string[] | undefined => {
       return undefined;
     } else {
       console.log(`Multiple options for ${size}. Testing...`);
+      sz.splice(i, 1);
 
       for (const o of options) {
         const modRow = replaceAt(row, o, size);
@@ -49,7 +48,7 @@ const recur = (sizes: number[], row: string): string[] | undefined => {
         if (workingRow) {
           for (const r of workingRow) {
             if (!working.includes(r)) {
-              console.log("Pushing", r);
+              console.log(":::::   PUSHING ::::: ->", r);
               working.push(r);
             }
           }
