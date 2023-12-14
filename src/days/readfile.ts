@@ -15,14 +15,33 @@ export const read = (
           return;
         }
         const rows = data.split("\n");
-        resolve(
-          rows.reduce<string[]>((acc, curr) => {
-            if (curr.length > 0) {
-              acc.push(curr);
-            }
-            return acc;
-          }, [])
-        );
+
+        resolve(trimArray(rows));
       }
     );
   });
+
+const trimArray = (arr: string[]) => {
+  let res = trimStart(arr);
+  res.reverse();
+  res = trimStart(res);
+  res.reverse();
+  return res;
+};
+
+const trimStart = (arr: string[]): string[] => {
+  const res: string[] = [];
+  let start = false;
+
+  for (let row of arr) {
+    if (row.length > 0) {
+      start = true;
+    }
+
+    if (start) {
+      res.push(row);
+    }
+  }
+
+  return res;
+};
