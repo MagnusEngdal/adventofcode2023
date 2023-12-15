@@ -6,40 +6,56 @@ export const part1 = (rows: ParseResult) => {
 
   let total = 0;
   for (const s of springs) {
-    total += testSize(s.sizes, 0, s.row);
+    let test = testSize(s.sizes, 0, s.row);
+    total += test;
+  }
+
+  return total;
+};
+
+export const part2 = (rows: ParseResult) => {
+  const springs = parse(rows);
+
+  let total = 0;
+  let count = 0;
+  for (const s of springs) {
+    count++;
+    console.log(`${count} / ${springs.length}`);
+    let row: string[] = [];
+    let sizes: number[] = [];
+    for (let i = 0; i < 5; i++) {
+      row.push(s.row);
+      sizes = [...sizes, ...s.sizes];
+    }
+    s.row = row.join("?");
+    s.sizes = sizes;
+
+    let test = testSize(s.sizes, 0, s.row);
+    total += test;
   }
 
   return total;
 };
 
 const testSize = (sizes: number[], i: number, row: string): number => {
-  if (!sizes[i]) return 1;
-
   const size = sizes[i];
+  if (!size) {
+    if (row.includes("#")) return 0;
+    return 1;
+  }
   const options = findOptions(size, row);
 
   if (options.length > 0) {
-    if (options.length === 1 && i === sizes.length - 1) {
-      if (invalidPlacement(row)) return 0;
-      return 1;
-    } else {
-      let total = 0;
-      for (const o of options) {
-        const newRow = place(o, size, row);
-        if (invalidPlacement(row)) return 0;
-        total += testSize(sizes, i + 1, newRow);
-      }
-      return total;
+    let total = 0;
+    for (const o of options) {
+      const newRow = place(o, size, row);
+      if (invalidPlacement(newRow)) break;
+      total += testSize(sizes, i + 1, newRow);
     }
-  } else if (options.length === 1) {
-    return 1;
+    return total;
   } else {
     return 0;
   }
-};
-
-export const part2 = (rows: ParseResult) => {
-  return 0;
 };
 
 const invalidPlacement = (row: string): boolean => {
@@ -73,15 +89,22 @@ const place = (i: number, size: number, row: string) => {
 const findOptions = (size: number, row: string): number[] => {
   const rowArr = row.split("");
   const options: number[] = [];
+  if (typeof size === "undefined") throw Error();
+
+  let hashes = 0;
 
   for (let x = 0; x < rowArr.length; x++) {
     const curr = rowArr[x];
     const prev = rowArr[x - 1];
     const after = rowArr[x + size];
 
+    if (hashes > 1) break;
+
+    if (curr === "#") hashes++;
+
     if (
       (curr === "?" || curr === "#") &&
-      (!prev || prev === "." || prev === "?") &&
+      (!prev || prev === "." || prev === "?" || prev === "o") &&
       (!after || after === "." || after === "?")
     ) {
       let valid = true;
