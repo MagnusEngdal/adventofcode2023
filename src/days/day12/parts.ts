@@ -1,106 +1,119 @@
-import { splitNumbers } from "../helpers/splitNumbers";
 import { ParseResult } from "./parse";
-
-interface Field {
-  nr: number[];
-  row: string;
-}
+import { splitNumbers } from "../helpers/splitNumbers";
 
 export const part1 = (rows: ParseResult) => {
-  const fields: Field[] = [];
-  for (const row of rows) {
-    fields.push({
-      nr: splitNumbers(row.split(" ")[1], ","),
-      row: row.split(" ")[0],
-    });
+  const springs = parse(rows);
+
+  let total = 0;
+  for (const s of springs) {
+    total += testSize(s.sizes, 0, s.row);
   }
 
-  const f = fields[2];
-  console.log(recur(f.nr, f.row));
+  return total;
+};
 
+const testSize = (sizes: number[], i: number, row: string): number => {
+  if (!sizes[i]) return 1;
+
+  const size = sizes[i];
+  const options = findOptions(size, row);
+
+  if (options.length > 0) {
+    if (options.length === 1 && i === sizes.length - 1) {
+      if (invalidPlacement(row)) return 0;
+      return 1;
+    } else {
+      let total = 0;
+      for (const o of options) {
+        const newRow = place(o, size, row);
+        if (invalidPlacement(row)) return 0;
+        total += testSize(sizes, i + 1, newRow);
+      }
+      return total;
+    }
+  } else if (options.length === 1) {
+    return 1;
+  } else {
+    return 0;
+  }
+};
+
+export const part2 = (rows: ParseResult) => {
   return 0;
 };
 
-const recur = (sizes: number[], row: string): string[] | undefined => {
-  const working: string[] = [];
-  const sz = [...sizes];
-  console.log("---", sizes, row, sizes);
-  for (let i = 0; i < sizes.length; i++) {
-    const size = sizes[i];
-    console.log("Testing: ", size, row, sizes, i);
-    const options = findOptions(size, row);
-    console.log(`Options to place ${size}: `, options);
-    if (options.length === 1 && sz.length === 1) {
-      console.log(`Ony one option for ${size}, returning "true"`);
-      return [replaceAt(row, options[0], size)];
-    } else if (options.length < 1 && sz.length > 0) {
-      console.log(`No possible plaements for ${size}, returning "false"`);
-      return undefined;
-    } else {
-      console.log(`Multiple options for ${size}. Testing...`);
-      sz.splice(i, 1);
-
-      for (const o of options) {
-        const modRow = replaceAt(row, o, size);
-        console.log(`Testing option ${o} for size: ${size} with row ${modRow}`);
-
-        const workingRow = recur(sz, modRow);
-        if (workingRow) {
-          for (const r of workingRow) {
-            if (!working.includes(r)) {
-              console.log(":::::   PUSHING ::::: ->", r);
-              working.push(r);
-            }
-          }
-        }
-      }
-      console.log(`Working options for ${size}:`, working);
+const invalidPlacement = (row: string): boolean => {
+  let brackets = 0;
+  for (let i = 0; i < row.length; i++) {
+    if (row[i] === "#") brackets++;
+    if (row[i] === "o" && brackets > 0) {
+      return true;
     }
   }
-  return working;
+  return false;
 };
 
-const replaceAt = (row: string, index: number, length: number): string => {
-  let newRow = row.split("");
-  for (let i = index; i < index + length; i++) {
-    newRow[i] = "o";
+const place = (i: number, size: number, row: string) => {
+  const rowArr = row.split("");
+  for (let i2 = 0; i2 < i; i2++) {
+    if (rowArr[i2] === "?") {
+      rowArr[i2] = ".";
+    }
   }
-  if (newRow[index + length] && newRow[index + length] === "?") {
-    newRow[index + length] = ".";
+  for (let i3 = i; i3 < i + size; i3++) {
+    rowArr[i3] = "o";
   }
-  if (newRow[index - 1] && newRow[index - 1] === "?") {
-    newRow[index - 1] = ".";
+  if (rowArr[i + size]) {
+    rowArr[i + size] = ".";
   }
-  return newRow.join("");
+
+  return rowArr.join("");
 };
 
 const findOptions = (size: number, row: string): number[] => {
+  const rowArr = row.split("");
   const options: number[] = [];
-  for (let i = 0; i < row.length; i++) {
-    const prev = row[i - 1] ?? undefined;
-    const curr = row[i];
-    const after = row[i + size];
+
+  for (let x = 0; x < rowArr.length; x++) {
+    const curr = rowArr[x];
+    const prev = rowArr[x - 1];
+    const after = rowArr[x + size];
+
     if (
       (curr === "?" || curr === "#") &&
+      (!prev || prev === "." || prev === "?") &&
       (!after || after === "." || after === "?")
     ) {
-      if (!prev || prev === "." || prev === "?") {
-        let fits = true;
-        for (let c = 0; c < size; c++) {
-          if (!row[i + c] || row[i + c] === ".") {
-            fits = false;
-            break;
-          }
-        }
-        if (fits) {
-          options.push(i);
+      let valid = true;
+      for (let s = 1; s < size; s++) {
+        const c = rowArr[x + s];
+        if (c !== "?" && c !== "#") {
+          valid = false;
+          break;
         }
       }
+      if (valid) options.push(x);
     }
   }
   return options;
 };
 
-export const part2 = (rows: ParseResult) => {
-  return 0;
+interface Spring {
+  row: string;
+  sizes: number[];
+}
+
+const parse = (rows: string[]) => {
+  const springs: Spring[] = [];
+
+  for (const r of rows) {
+    const s = r.split(" ");
+    const sizes = splitNumbers(s[1], ",");
+    springs.push({
+      row: s[0],
+      sizes,
+    });
+  }
+
+  return springs;
 };
