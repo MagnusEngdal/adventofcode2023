@@ -16,6 +16,9 @@ import { day as day15 } from "./day15";
 import { day as day16 } from "./day16";
 import { day as day17 } from "./day17";
 import { day as day18 } from "./day18";
+import { day as day19 } from "./day19";
+import { day as day20 } from "./day20";
+import { day as day21 } from "./day21";
 import { read } from "./readfile";
 
 export interface day {
@@ -41,6 +44,9 @@ const dayList: Record<string, day> = {
   day16,
   day17,
   day18,
+  day19,
+  day20,
+  day21,
 };
 
 export const days = async (

@@ -1,0 +1,231 @@
+{
+  "journey_application_token": "JA-6WBRc7sku6inP4Sdl4py",
+  "external_partner_id": null,
+  "external_group_id": "Production-45d4ad70-87b9-4ab0-ada2-141c3c135dac",
+  "status": "data_request",
+  "sandbox": false,
+  "created_at": 1703091606417,
+  "updated_at": 1703091606779,
+  "closed_at": null,
+  "recent_outcome": null,
+  "complete_outcome": null,
+  "journey_application_status": "Pending",
+  "is_archived": false,
+  "is_escalated": false,
+  "is_shadow_application": false,
+  "is_part_of_shadow_test": false,
+  "is_rerun": false,
+  "archived_at": null,
+  "terminal_reconciliation_output": {},
+  "_embedded": {
+    "rerun": {},
+    "child_entities": [{
+      "external_entity_identifier": "Production-4e690df0-7baa-495f-b61c-301e70c98ff3",
+      "name": "Leidy Garcia",
+      "token": "P-w8yG4MRICQPFkzOt3GMf",
+      "type": "person",
+      "entity_application_token": "EA-bGOOggao9A67CO2G3cKz",
+      "entity_application_status": "data_request",
+      "entity_application_outcome": null,
+      "entity_application_branch_name": "Beneficiary Only",
+      "created": "2023-12-20T04:58:29.920Z",
+      "sandbox_persona_name": null
+    }],
+    "entity_applications": [{
+      "entity_token": "P-w8yG4MRICQPFkzOt3GMf",
+      "entity_application_token": "EA-bGOOggao9A67CO2G3cKz",
+      "entity_application_outcome": null,
+      "entity_application_status": "data_request",
+      "sdk_link": null,
+      "entity_application_status_details": {
+        "optional": [{
+          "key": "document_ssn_last4",
+          "type": "string",
+          "regex": "^\\d{4}$",
+          "description": "Last four digits of a US social security number"
+        }, {
+          "key": "document_license",
+          "type": "string",
+          "regex": "",
+          "description": "US issued drivers license number"
+        }, {
+          "key": "document_license_state",
+          "type": "string",
+          "regex": "",
+          "description": "US state"
+        }, {
+          "key": "ip_address_v4",
+          "type": "string",
+          "description": null
+        }, {
+          "key": "ip_address_v6",
+          "type": "string",
+          "description": null
+        }, {
+          "key": "socure_session_id",
+          "type": "string",
+          "description": null
+        }, {
+          "key": "partner_id",
+          "type": "string",
+          "description": null
+        }, {
+          "key": "business_name",
+          "type": "string",
+          "regex": "",
+          "description": "Business name"
+        }, {
+          "key": "business_address_country_code",
+          "type": "string",
+          "regex": "",
+          "description": "Two character ISO 3166-1 alpha-2 country code"
+        }, {
+          "key": "bank_account_number",
+          "type": "string",
+          "description": "Bank account number"
+        }, {
+          "key": "bank_routing_number",
+          "type": "string",
+          "description": "Bank routing number"
+        }, {
+          "key": "business_federal_ein",
+          "type": "string",
+          "regex": "^\\d{9}$",
+          "description": "Business Federal Employer Identification Number"
+        }, {
+          "key": "user_consent",
+          "type": "boolean",
+          "description": "Required for prefill module: Indicates if the consumer has provided consent."
+        }],
+        "required": [{
+          "key": "birth_date",
+          "type": "date",
+          "regex": "",
+          "message": "\"birth_date\" must be less than or equal to \"Wed Dec 20 2023 17:00:06 GMT+0000 (Coordinated Universal Time)\"",
+          "description": "Birth date - valid ISO 8601 format"
+        }]
+      },
+      "external_entity_identifier": "Production-4e690df0-7baa-495f-b61c-301e70c98ff3"
+    }],
+    "entity": {
+      "external_entity_identifier": "Production-45d4ad70-87b9-4ab0-ada2-141c3c135dac",
+      "name": null,
+      "token": "G-MVFXw3hialUtlP6pptjH",
+      "type": "group"
+    },
+    "events": [{
+      "journey_application_event_token": "45533104",
+      "journey_application_token": "JA-6WBRc7sku6inP4Sdl4py",
+      "type": "started_application",
+      "journey_type": "application",
+      "timestamp": 1703091606433,
+      "entity_token": null,
+      "entity_application_token": null,
+      "_embedded": {
+        "node": {
+          "id": null,
+          "name": null,
+          "type": null
+        }
+      },
+      "_links": {}
+    }, {
+      "journey_application_event_token": "45533107",
+      "journey_application_token": "JA-6WBRc7sku6inP4Sdl4py",
+      "type": "started_evaluation",
+      "journey_type": "application",
+      "timestamp": 1703091606545,
+      "evaluation_token": "L-EvaDyp2BFuhrtps9kjQO",
+      "entity_token": "P-w8yG4MRICQPFkzOt3GMf",
+      "entity_application_token": "EA-bGOOggao9A67CO2G3cKz",
+      "_embedded": {
+        "node": {
+          "id": "ffc20f7f-4b0c-4d4b-9c3a-55b4087dd59e",
+          "name": "Socure - Watchlist Only (Beneficiary) with Denied",
+          "type": "workflow",
+          "config": {
+            "application_token": "MdcyjV1DbARwqpypQraDRgRc5umsVDAF",
+            "workflow_token": "MdcyjV1DbARwqpypQraDRgRc5umsVDAF",
+            "application_version_id": 2,
+            "workflow_version_id": 2,
+            "workflow_type": "person",
+            "workflow_current_version": 2
+          },
+          "workflow_name": "Socure - Watchlist Only (Beneficiary) with Denied"
+        }
+      },
+      "_links": {
+        "evaluation": {
+          "href": "/v1/evaluations/L-EvaDyp2BFuhrtps9kjQO"
+        }
+      },
+      "evaluation_tokens_sorted_by_created_dec": ["L-EvaDyp2BFuhrtps9kjQO"]
+    }, {
+      "journey_application_event_token": "45533110",
+      "journey_application_token": "JA-6WBRc7sku6inP4Sdl4py",
+      "type": "data_request_evaluation",
+      "journey_type": "application",
+      "timestamp": 1703091606776,
+      "evaluation_token": "L-EvaDyp2BFuhrtps9kjQO",
+      "entity_token": "P-w8yG4MRICQPFkzOt3GMf",
+      "entity_application_token": "EA-bGOOggao9A67CO2G3cKz",
+      "_embedded": {
+        "node": {
+          "id": "ffc20f7f-4b0c-4d4b-9c3a-55b4087dd59e",
+          "name": "Socure - Watchlist Only (Beneficiary) with Denied",
+          "type": "workflow",
+          "config": {
+            "application_token": "MdcyjV1DbARwqpypQraDRgRc5umsVDAF",
+            "workflow_token": "MdcyjV1DbARwqpypQraDRgRc5umsVDAF",
+            "application_version_id": 2,
+            "workflow_version_id": 2,
+            "workflow_type": "person",
+            "workflow_current_version": 2
+          },
+          "workflow_name": "Socure - Watchlist Only (Beneficiary) with Denied",
+          "sdk_config": {
+            "plugin": "DocV",
+            "send_document_button": null,
+            "custom_uploaded_body": null,
+            "custom_uploaded_title": null,
+            "custom_document_body": null,
+            "custom_document_title": null,
+            "show_welcome_screen": false,
+            "sms_text": null,
+            "document_help_text": null,
+            "documents": null,
+            "validation_precheck": false,
+            "force_mobile": false,
+            "selfie": false
+          }
+        }
+      },
+      "_links": {
+        "evaluation": {
+          "href": "/v1/evaluations/L-EvaDyp2BFuhrtps9kjQO"
+        }
+      },
+      "evaluation_tokens_sorted_by_created_dec": ["L-EvaDyp2BFuhrtps9kjQO"]
+    }],
+    "journey": {
+      "journey_name": "KYC Journey",
+      "journey_type": "application",
+      "journey_token": "J-gbYcnQ2KgtVXumZztPWO",
+      "journey_version_num": "31",
+      "_links": {
+        "self": {
+          "href": "/v1/journeys/J-gbYcnQ2KgtVXumZztPWO"
+        },
+        "callback": {
+          "href": "/v1/journeys/J-gbYcnQ2KgtVXumZztPWO/applications/JA-6WBRc7sku6inP4Sdl4py/"
+        },
+        "callback_by_entity_application_token": {}
+      }
+    }
+  },
+  "_links": {
+    "self": {
+      "href": "/v1/journeys/J-gbYcnQ2KgtVXumZztPWO/applications/JA-6WBRc7sku6inP4Sdl4py"
+    }
+  }
+}
